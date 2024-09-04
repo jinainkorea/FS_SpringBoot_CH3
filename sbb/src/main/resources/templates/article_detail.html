@@ -30,11 +30,8 @@
 
   <!--답글 폼-->
   <form th:action="@{|/comment/create/${article.id}|}" th:object="${commentForm}" method="post">
-  <!--오류메세지-->
-    <div class="alert alert-danger"
-         role="alert" th:if="${#fields.hasAnyErrors()}">
-      <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-    </div>
+    <!--오류메세지-->
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
     <textarea th:field="*{content}" rows="10" class="form-control"></textarea>
     <input type="submit" value="답글달기">
   </form>
