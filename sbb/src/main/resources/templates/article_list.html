@@ -12,9 +12,13 @@
       </thead>
       <tbody>
         <tr th:each="article, loop: ${paging}">
-          <td th:text="${loop.count}">번호</td>
+          <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}">번호</td>
           <td>
             <a th:href="|/article/detail/${article.id}|" th:text="${article.title}"></a>
+            <span class="text-danger small ms-2"
+                  th:if="${#lists.size(article.commentList) > 0}"
+                  th:text="${#lists.size(article.commentList)}">
+            </span>
           </td>
           <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}">작성날짜</td>
         </tr>
