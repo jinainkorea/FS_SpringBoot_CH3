@@ -1,6 +1,7 @@
 package com.mysite.sbb.Article;
 
 import com.mysite.sbb.Comment.Comment;
+import com.mysite.sbb.User.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +27,7 @@ public class Article {
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
+
+    @ManyToOne
+    private SiteUser author;
 }
