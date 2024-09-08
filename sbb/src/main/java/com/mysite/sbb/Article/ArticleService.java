@@ -48,4 +48,15 @@ public class ArticleService {
         return this.articleRepository.findAll(pageable);
     }
 
+    public void modify(Article article, String title, String content) {
+        article.setTitle(title);
+        article.setContent(content);
+        article.setModifyDate(LocalDateTime.now());
+        this.articleRepository.save(article);
+    }
+
+    public void delete(Article article) {
+        this.articleRepository.delete(article);
+    }
+
 }
