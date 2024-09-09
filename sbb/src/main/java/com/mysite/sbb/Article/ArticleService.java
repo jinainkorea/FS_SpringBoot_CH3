@@ -59,4 +59,8 @@ public class ArticleService {
         this.articleRepository.delete(article);
     }
 
+    public void vote(Article article, SiteUser siteUser) {
+        article.getVoter().add(siteUser);
+        this.articleRepository.save(article);
+    }
 }

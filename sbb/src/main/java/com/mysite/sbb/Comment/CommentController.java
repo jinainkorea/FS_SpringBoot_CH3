@@ -73,4 +73,13 @@ public class CommentController {
         return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
     }
 
+    @PreAuthorize("isAuthenticated")
+    @GetMapping("/vote/{id}")
+    public String commentVote(Principal principal, @PathVariable("id") Integer id) {
+        Comment comment = this.commentService.getComment(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.commentService.vote(comment, siteUser);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
+
 }

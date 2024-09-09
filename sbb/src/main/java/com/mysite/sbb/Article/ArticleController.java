@@ -95,5 +95,12 @@ public class ArticleController {
         return "redirect:/";
     }
 
-
+    @PreAuthorize("isAuthenticated")
+    @GetMapping("/vote/{id}")
+    public String articleVote(Principal principal, @PathVariable("id") Integer id) {
+        Article article = this.articleService.getArticleById(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.articleService.vote(article, siteUser);
+        return String.format("redirect:/article/detail/%s", id);
+    }
 }
