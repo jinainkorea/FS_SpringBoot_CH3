@@ -15,13 +15,14 @@ import java.time.LocalDateTime;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public void createComment(Article article, String content, SiteUser author) {
+    public Comment createComment(Article article, String content, SiteUser author) {
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setCreateDate(LocalDateTime.now());
         comment.setArticle(article);
         comment.setAuthor(author);
         this.commentRepository.save(comment);
+        return comment;
     }
 
     public Comment getComment(Integer id) {

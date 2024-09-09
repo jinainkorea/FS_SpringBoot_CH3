@@ -33,8 +33,8 @@ public class CommentController {
             model.addAttribute("article", article);
             return "article_detail";
         }
-        this.commentService.createComment(article, commentForm.getContent(), siteUser);
-        return String.format("redirect:/article/detail/%s", id);
+        Comment comment = this.commentService.createComment(article, commentForm.getContent(), siteUser);
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -59,7 +59,7 @@ public class CommentController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         this.commentService.modify(comment, commentForm.getContent());
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -79,7 +79,7 @@ public class CommentController {
         Comment comment = this.commentService.getComment(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.commentService.vote(comment, siteUser);
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
 }
