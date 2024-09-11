@@ -18,4 +18,9 @@ public class ArticleController {
         model.addAttribute("articleList", this.articleService.list());
         return "article_list";
     }
+
+    @GetMapping("/create")
+    private String create() {
+        return "article_form";
+    }
 }
