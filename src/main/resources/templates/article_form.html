@@ -1,10 +1,14 @@
-<h2>글 등록하기</h2>
-<form th:action="@{/article/create}" method="post">
-  <div>
-    <input type="text" name="title" id="title" placeholder="제목">
-  </div>
-  <div>
-    <textarea name="content" id="content" rows="10" placeholder="내용"></textarea>
-  </div>
-  <input type="submit" value="등록하기">
-</form>
+<html laytout:decorate="~{layout}">
+<div layout:fragment="content">
+  <h2>글 등록하기</h2>
+  <form th:action="@{/article/create}" method="post">
+    <div>
+      <input type="text" name="title" id="title" placeholder="제목">
+    </div>
+    <div>
+      <textarea name="content" id="content" rows="10" placeholder="내용"></textarea>
+    </div>
+    <input type="submit" value="등록하기">
+  </form>
+</div>
+</html>
