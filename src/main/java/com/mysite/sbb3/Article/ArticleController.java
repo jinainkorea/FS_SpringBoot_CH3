@@ -27,4 +27,10 @@ public class ArticleController {
         this.articleService.create(title, content);
         return "redirect:/";
     }
+
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("article", this.articleService.getArticleById(id));
+        return "article_detail";
+    }
 }
