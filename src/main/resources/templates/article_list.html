@@ -1,0 +1,12 @@
+<table>
+  <thead>
+    <th>번호</th>
+    <th>제목</th>
+    <th>작성날짜</th>
+  </thead>
+  <tbody th:each="article, loop: ${articleList}">
+    <td th:text="${loop.count}"></td>
+    <td th:text="${article.title}"></td>
+    <td th:text="${article.createDate}"></td>
+  </tbody>
+</table>
