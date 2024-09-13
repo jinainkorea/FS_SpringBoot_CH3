@@ -11,7 +11,7 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
 
   public void signup(String username, String email, String password) {
-    User user = new User();
+    SiteUser user = new SiteUser();
     user.setUsername(username);
     user.setEmail(email);
     user.setPassword(passwordEncoder.encode(password));

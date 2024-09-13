@@ -32,4 +32,11 @@ public class UserController {
     userService.signup(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword());
     return "redirect:/";
   }
+
+  @GetMapping("/login")
+  public String login() {
+    return "login_form";
+  }
+
+
 }
