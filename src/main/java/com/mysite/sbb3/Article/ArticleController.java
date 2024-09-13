@@ -35,7 +35,10 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String create(@Valid ArticleForm articleForm, Principal principal) {
+    public String create(@Valid ArticleForm articleForm, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "article_form";
+        }
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.articleService.create(articleForm.getTitle(), articleForm.getContent(), siteUser);
         return "redirect:/";
