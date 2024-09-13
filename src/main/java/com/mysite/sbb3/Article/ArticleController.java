@@ -23,7 +23,8 @@ public class ArticleController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, @RequestParam(value = "kw", defaultValue = "")) {
+
         model.addAttribute("articleList", this.articleService.list());
         return "article_list";
     }
