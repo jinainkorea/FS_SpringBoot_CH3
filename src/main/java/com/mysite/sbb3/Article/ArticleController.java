@@ -3,6 +3,7 @@ package com.mysite.sbb3.Article;
 import com.mysite.sbb3.User.SiteUser;
 import com.mysite.sbb3.User.UserRepository;
 import com.mysite.sbb3.User.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,15 +27,15 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    private String create() {
+    private String create(ArticleForm articleForm) {
         return "article_form";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String create(@RequestParam(value = "title") String title, @RequestParam(value = "content") String content, Principal principal) {
+    public String create(@Valid ArticleForm articleForm, Principal principal) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.articleService.create(title, content, siteUser);
+        this.articleService.create(articleForm.getTitle(), articleForm.getContent(), siteUser);
         return "redirect:/";
     }
 
