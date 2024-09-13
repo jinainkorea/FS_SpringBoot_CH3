@@ -52,7 +52,7 @@ public class ArticleController {
     @GetMapping("/modify/{id}")
     public String modify(ArticleForm articleForm, @PathVariable("id") Integer id, Principal principal) {
         Article article = this.articleService.getArticleById(id);
-        if (article.getAuthor().equals(principal.getName())) {
+        if (!article.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         articleForm.setTitle(article.getTitle());
@@ -67,10 +67,10 @@ public class ArticleController {
             return "article_form";
         }
         Article article = this.articleService.getArticleById(id);
-        if (article.getAuthor().equals(principal.getName())) {
+        if (!article.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.articleService.modify(article, article.getTitle(), article.getContent());
-        return String .format("redirect:/article/datail/%s", id);
+        this.articleService.modify(article, articleForm.getTitle(), articleForm.getContent());
+        return String .format("redirect:/article/detail/%s", id);
     }
 }
