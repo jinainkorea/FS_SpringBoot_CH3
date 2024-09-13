@@ -1,7 +1,6 @@
 package com.mysite.sbb3.Article;
 
 import com.mysite.sbb3.User.SiteUser;
-import com.mysite.sbb3.User.UserRepository;
 import com.mysite.sbb3.User.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,8 @@ public class ArticleController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "kw", defaultValue = "")) {
-
-        model.addAttribute("articleList", this.articleService.list());
+    public String list(Model model, @RequestParam(value = "kw", defaultValue = "") String kw) {
+        model.addAttribute("articleList", this.articleService.list(kw));
         return "article_list";
     }
 

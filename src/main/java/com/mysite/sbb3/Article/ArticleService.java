@@ -2,7 +2,6 @@ package com.mysite.sbb3.Article;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Predicate;
 
 import com.mysite.sbb3.User.SiteUser;
 import jakarta.persistence.criteria.*;
@@ -17,7 +16,7 @@ public class ArticleService {
 
     public List<Article> list(String kw) {
         Specification<Article> spec = search(kw);
-        return this.articleRepository.findByKw(spec);
+        return this.articleRepository.findAll(spec);
     }
 
     public void create(String title, String content, SiteUser author) {
@@ -47,7 +46,7 @@ public class ArticleService {
             public Predicate toPredicate(Root<Article> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 query.distinct(true);  // 중복을 제거
                 Join<Article, SiteUser> u1 = q.join("author", JoinType.LEFT);
-                return cb.or(cb.like(q.get("subject"), "%" + kw + "%"), // 제목
+                return cb.or(cb.like(q.get("title"), "%" + kw + "%"), // 제목
                     cb.like(q.get("content"), "%" + kw + "%"),      // 내용
                     cb.like(u1.get("username"), "%" + kw + "%"));    // 질문 작성자
             }
