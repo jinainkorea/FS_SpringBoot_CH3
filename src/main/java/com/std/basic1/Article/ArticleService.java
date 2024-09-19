@@ -4,6 +4,7 @@ import com.std.basic1.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,13 @@ public class ArticleService {
         } else {
             throw new DataNotFoundException("Article with id " + id + " not found");
         }
+    }
+
+    public void createArticle(String title, String content) {
+        Article article = new Article();
+        article.setTitle(title);
+        article.setContent(content);
+        article.setCreateDate(LocalDateTime.now());
+        this.articleRepository.save(article);
     }
 }

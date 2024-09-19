@@ -1,13 +1,12 @@
 package com.std.basic1.Article;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Getter
@@ -27,5 +26,16 @@ public class ArticleController {
     public String detail(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("article", this.articleService.getArticle(id));
         return "article_detail";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model, ArticleForm articleForm) {
+        return "article_form";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid ArticleForm articleForm) {
+        this.articleService.createArticle(articleForm.getTitle(), articleForm.getContent());
+        return "redirect:/article/list";
     }
 }
