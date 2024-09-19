@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -34,7 +35,10 @@ public class ArticleController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid ArticleForm articleForm) {
+    public String create(@Valid ArticleForm articleForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "article_form";
+        }
         this.articleService.createArticle(articleForm.getTitle(), articleForm.getContent());
         return "redirect:/article/list";
     }
