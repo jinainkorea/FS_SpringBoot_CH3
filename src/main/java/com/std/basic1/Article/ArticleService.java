@@ -1,6 +1,7 @@
 package com.std.basic1.Article;
 
 import com.std.basic1.DataNotFoundException;
+import com.std.basic1.SiteUser.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +27,12 @@ public class ArticleService {
         }
     }
 
-    public void createArticle(String title, String content) {
+    public void createArticle(String title, String content, SiteUser author) {
         Article article = new Article();
         article.setTitle(title);
         article.setContent(content);
         article.setCreateDate(LocalDateTime.now());
+        article.setAuthor(author);
         this.articleRepository.save(article);
     }
 }
