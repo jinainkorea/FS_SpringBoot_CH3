@@ -78,4 +78,15 @@ public class ArticleController {
         this.articleService.modifyArticle(article, articleForm.getTitle(), articleForm.getContent());
         return String.format("redirect:/article/detail/%s", id);
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, Principal principal) {
+        Article article = this.articleService.getArticle(id);
+        if (!article.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+        }
+        this.articleService.deleteArticle(article);
+        return "redirect:/";
+    }
 }
