@@ -6,6 +6,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import com.mysite.sbb.Category.Category;
+import com.mysite.sbb.Category.CategoryService;
 import com.mysite.sbb.Comment.CommentForm;
 import com.mysite.sbb.User.SiteUser;
 import com.mysite.sbb.User.UserService;
@@ -26,12 +28,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class ArticleController {
     private final ArticleService articleService;
     private final UserService userService;
+    private final CategoryService categoryService;
 
-    @GetMapping("/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="kw", defaultValue = "") String kw) {
-        Page<Article> paging = this.articleService.getList(page, kw);
+    @GetMapping("/list/{cid}")
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="kw", defaultValue = "") String kw, @RequestParam(value="cid", defaultValue = "1") Integer cid) {
+        Page<Article> paging = this.articleService.getList(page, kw, cid);
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
+        model.addAttribute("category", this.categoryService.getCategory(cid));
         return "article_list";
     }
 
@@ -55,7 +59,8 @@ public class ArticleController {
             return "article_form";
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.articleService.createArticle(articleForm.getTitle(), articleForm.getContent(), siteUser);
+        Category category = this.categoryService.getCategory(articleForm.getCategory().getId());
+        this.articleService.createArticle(articleForm.getTitle(), articleForm.getContent(), siteUser, category                                                                                              );
         return "redirect:/article/list";
     }
 

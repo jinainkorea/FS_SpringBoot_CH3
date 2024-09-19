@@ -1,5 +1,6 @@
 package com.mysite.sbb.Article;
 
+import com.mysite.sbb.Category.Category;
 import com.mysite.sbb.Comment.Comment;
 import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.User.SiteUser;
@@ -53,21 +54,23 @@ public class ArticleService {
         }
     }
 
-    public void createArticle(String title, String content, SiteUser user) {
+    public void createArticle(String title, String content, SiteUser user, Category category) {
         Article article = new Article();
         article.setTitle(title);
         article.setContent(content);
         article.setCreateDate(LocalDateTime.now());
         article.setAuthor(user);
+        article.setCategory(category);
         this.articleRepository.save(article);
     }
 
-    public Page<Article> getList(int page, String kw) {
+    public Page<Article> getList(int page, String kw, Integer cid) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
+
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 //        Specification<Article> spec = search(kw);
-        return this.articleRepository.findAllByKeyword(kw, pageable);
+        return this.articleRepository.findAllByKeyword(kw, cid, pageable);
     }
 
     public void modify(Article article, String title, String content) {

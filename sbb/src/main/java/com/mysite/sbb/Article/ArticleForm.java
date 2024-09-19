@@ -1,5 +1,6 @@
 package com.mysite.sbb.Article;
 
+import com.mysite.sbb.Category.Category;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -15,4 +16,7 @@ public class ArticleForm {
 
     @NotEmpty(message="내용은 필수항목입니다.")
     private String content;
+
+    @NotEmpty(message = "카테고리는 필수항목입니다.")
+    private Category category;
 }

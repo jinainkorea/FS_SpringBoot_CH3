@@ -1,5 +1,6 @@
 package com.mysite.sbb.Article;
 
+import com.mysite.sbb.Category.Category;
 import com.mysite.sbb.Comment.Comment;
 import com.mysite.sbb.User.SiteUser;
 import jakarta.persistence.*;
@@ -36,4 +37,7 @@ public class Article {
 
     @ManyToMany
     Set<SiteUser> voter;
+
+    @ManyToOne
+    private Category category;
 }
