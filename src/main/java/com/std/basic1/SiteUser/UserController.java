@@ -28,7 +28,7 @@ public class UserController {
             bindingResult.rejectValue("passwordConfirm", "passwordInCorrect", "두 개의 비밀번호가 일치하지 않습니다.");
             return "signup_form";
         }
-        this.userService.sign_up(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword());
+        this.userService.sign_up(userCreateForm.getUsername(), userCreateForm.getNickname(), userCreateForm.getPassword());
         return "redirect:/";
     }
 

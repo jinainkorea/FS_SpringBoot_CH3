@@ -12,10 +12,10 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public SiteUser sign_up(String username, String email, String password) {
+    public SiteUser sign_up(String username, String nickname, String password) {
         SiteUser user = new SiteUser();
         user.setUsername(username);
-        user.setEmail(email);
+        user.setNickname(nickname);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(password));
         this.userRepository.save(user);
