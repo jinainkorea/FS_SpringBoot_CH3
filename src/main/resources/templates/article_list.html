@@ -1,2 +1,14 @@
-<h2>제목</h2>
-<h2>내용</h2>
+<table>
+  <thead>
+  <tr>
+    <th>제목</th>
+    <th>작성일시</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="article : ${articleList}">
+    <td th:text="${article.title}"></td>
+    <td th:text="${article.createDate}"></td>
+  </tr>
+  </tbody>
+</table>
