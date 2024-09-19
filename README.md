@@ -22,6 +22,16 @@
 ## 미비사(선택)항 or 막힌 부분
 - ...
 
+## 스크린샷
+- 메인 목록 화면
+  ![스크린샷 2024-09-19 152239](https://github.com/user-attachments/assets/c8f4701c-f21d-455c-8d6f-7d7eff115c4b)
+- 글 세부페이지
+  ![image](https://github.com/user-attachments/assets/8e5acc50-637e-4ac3-9f0d-6a7157963e62)
+- 회원가입
+  ![스크린샷 2024-09-19 152252](https://github.com/user-attachments/assets/72a88eab-2cbd-47b8-81ca-2f5dd6fe2eb0)
+- 로그인
+  ![image](https://github.com/user-attachments/assets/9476e6fb-9fde-4713-91c0-cf2b6baecd71)
+
 ## 리뷰
 - 걸린 시간은 수업 시간 통틀어서 약 5시간
 - 교재를 80% 참고하는 정도로 숙지
