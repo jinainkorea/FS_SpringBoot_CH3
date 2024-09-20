@@ -21,13 +21,14 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
         + "left outer join SiteUser u1 on a.author=u1 "
         + "left outer join Comment c on c.article=a "
         + "left outer join SiteUser u2 on c.author=u2 "
-        + "left outer join Category ca on a.category=ca "
+        + "left outer join Category ca on ca=a.category "
         + "where "
-        + "     a.title like %:kw% "
+        + "     (a.title like %:kw% "
         + "     or a.content like %:kw% "
         + "     or u1.username like %:kw% "
         + "     or c.content like %:kw% "
-        + "     or u2.username like %:kw% "
-        + "     and ca.id = :cid")
-    Page<Article> findAllByKeyword(@Param("kw") String kw, @Param("cid") Integer cid, Pageable pageable);
+        + "     or u2.username like %:kw%) "
+        + "     and (:cid = 0 or ca.id = :cid)"
+    )
+    Page<Article> findAllByKeyword(@Param("kw") String kw, Pageable pageable, @Param("cid") Integer cid);
 }

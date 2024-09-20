@@ -30,12 +30,11 @@ public class ArticleController {
     private final UserService userService;
     private final CategoryService categoryService;
 
-    @GetMapping("/list/{cid}")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="kw", defaultValue = "") String kw, @RequestParam(value="cid", defaultValue = "1") Integer cid) {
+    @GetMapping("/list")
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="kw", defaultValue = "") String kw, @RequestParam(value="cid", defaultValue = "0") Integer cid) {
         Page<Article> paging = this.articleService.getList(page, kw, cid);
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
-        model.addAttribute("category", this.categoryService.getCategory(cid));
         return "article_list";
     }
 

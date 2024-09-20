@@ -23,23 +23,24 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    private Specification<Article> search(String kw) {
-        return new Specification<>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Predicate toPredicate(Root<Article> a, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);
-                Join<Article, SiteUser> u1 = a.join("author", JoinType.LEFT);
-                Join<Article, Comment> c = a.join("commentList", JoinType.LEFT);
-                Join<Comment, SiteUser> u2 = c.join("author", JoinType.LEFT);
-                return cb.or(cb.like(a.get("title"), "%" + kw + "%"), // 제목
-                    cb.like(a.get("content"), "%" + kw + "%"), // 내용
-                    cb.like(u1.get("username"), "%" + kw + "%"), // 글 작성자
-                    cb.like(c.get("content"), "%" + kw + "%"), // 답변 내용
-                    cb.like(u2.get("username"), "%" + kw + "%")); // 답변 작성자
-            }
-        };
-    }
+//    검색 쿼리 JPA로 처리하는 버전
+//    private Specification<Article> search(String kw) {
+//        return new Specification<>() {
+//            private static final long serialVersionUID = 1L;
+//            @Override
+//            public Predicate toPredicate(Root<Article> a, CriteriaQuery<?> query, CriteriaBuilder cb) {
+//                query.distinct(true);
+//                Join<Article, SiteUser> u1 = a.join("author", JoinType.LEFT);
+//                Join<Article, Comment> c = a.join("commentList", JoinType.LEFT);
+//                Join<Comment, SiteUser> u2 = c.join("author", JoinType.LEFT);
+//                return cb.or(cb.like(a.get("title"), "%" + kw + "%"), // 제목
+//                    cb.like(a.get("content"), "%" + kw + "%"), // 내용
+//                    cb.like(u1.get("username"), "%" + kw + "%"), // 글 작성자
+//                    cb.like(c.get("content"), "%" + kw + "%"), // 답변 내용
+//                    cb.like(u2.get("username"), "%" + kw + "%")); // 답변 작성자
+//            }
+//        };
+//    }
 
     public List<Article> getArticleList() {
         return this.articleRepository.findAll();
@@ -70,7 +71,7 @@ public class ArticleService {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 //        Specification<Article> spec = search(kw);
-        return this.articleRepository.findAllByKeyword(kw, cid, pageable);
+        return this.articleRepository.findAllByKeyword(kw, pageable, cid);
     }
 
     public void modify(Article article, String title, String content) {
