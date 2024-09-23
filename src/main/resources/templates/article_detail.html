@@ -1,6 +1,5 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
-  <!-- 질문 -->
   <h2 class="border-bottom py-2" th:text="${article.title}"></h2>
   <div class="card my-3">
     <div class="card-body">
@@ -12,5 +11,6 @@
       </div>
     </div>
   </div>
+  <a th:href="@{|/article/list|}" class="btn btn-primary">글 목록가기</a>
 </div>
 </html>
