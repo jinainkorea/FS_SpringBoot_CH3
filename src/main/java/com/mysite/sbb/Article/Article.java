@@ -1,5 +1,6 @@
 package com.mysite.sbb.Article;
 
+import com.mysite.sbb.User.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,7 @@ public class Article {
   private String content;
 
   private LocalDateTime createDate;
+
+  @ManyToOne
+  private SiteUser author;
 }
