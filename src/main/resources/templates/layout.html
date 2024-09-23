@@ -9,8 +9,10 @@
   <title>2nd TEST</title>
 </head>
 <body>
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<!-- NAVBAR -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<!-- CONTENT Start -->
 <th:block layout:fragment="content"></th:block>
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
+<!-- CONTENT End -->
 </body>
 </html>
