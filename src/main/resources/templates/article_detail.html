@@ -5,12 +5,27 @@
     <div class="card-body">
       <div class="card-text" style="white-space: pre-line;" th:text="${article.content}"></div>
       <div class="d-flex justify-content-end">
+        <div th:if="${article.modifyDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+          <div class="mb-2">modified at</div>
+          <div th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
         <div class="badge bg-light text-dark p-2 text-start">
           <div class="mb-2">
             <span th:if="${article.author != null}" th:text="${article.author.nickname}"></span>
           </div>
           <div th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
+      </div>
+      <div class="my-3">
+        <a th:href="@{|/article/modify/${article.id}|}" class="btn btn-sm btn-outline-secondary"
+           sec:authorize="isAuthenticated()"
+           th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+           th:text="수정"></a>
+        <a href="javascript:void(0);" th:data-uri="@{|/article/delete/${article.id}|}"
+           class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+           th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+           th:text="삭제"
+           onclick="if(confirm('정말 삭제하시겠습니까?')) { window.location.href = this.getAttribute('data-uri'); }"></a>
       </div>
     </div>
   </div>

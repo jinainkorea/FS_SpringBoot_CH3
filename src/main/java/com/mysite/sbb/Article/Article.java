@@ -23,6 +23,8 @@ public class Article {
 
   private LocalDateTime createDate;
 
+  private LocalDateTime modifyDate;
+
   @ManyToOne
   private SiteUser author;
 }
