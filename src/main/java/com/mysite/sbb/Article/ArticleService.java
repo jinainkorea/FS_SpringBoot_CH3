@@ -2,9 +2,12 @@ package com.mysite.sbb.Article;
 
 import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.User.SiteUser;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +17,24 @@ import java.util.Optional;
 public class ArticleService {
   private final ArticleRepository articleRepository;
 
-  public List<Article> list() {
-    return this.articleRepository.findAll();
+  private Specification<Article> search(String kw) {
+    return new Specification<Article>() {
+      private static final long serialVersionUID = 1L;
+      @Override
+      public Predicate toPredicate(Root<Article> a, CriteriaQuery<?> query, CriteriaBuilder cb) {
+        query.distinct(true);
+        Join<Article, SiteUser> u1 = a.join("author", JoinType.LEFT);
+        return cb.or(cb.like(a.get("title"), "%" + kw + "%"),
+                cb.like(a.get("content"), "%" + kw + "%"),
+                cb.like(u1.get("username"), "%" + kw + "%"))
+            ;
+      }
+    };
+  }
+
+  public List<Article> list(String kw) {
+    Specification<Article> spec = search(kw);
+    return this.articleRepository.findAll(spec);
   }
 
   public void createArticle(String title, String content, SiteUser author) {
