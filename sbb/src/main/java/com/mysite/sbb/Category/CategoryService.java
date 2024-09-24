@@ -16,7 +16,10 @@ public class CategoryService {
     public Category getCategory(Integer id) {
         Optional<Category> category = categoryRepository.findById(id);
         if (category.isEmpty()) {
-            return null;
+            Category defaultCategory = new Category();
+            defaultCategory.setId(0);
+            defaultCategory.setName("전체");
+            return defaultCategory;
         }
         return category.get();
     }

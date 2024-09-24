@@ -31,8 +31,9 @@ public class ArticleController {
     private final CategoryService categoryService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="kw", defaultValue = "") String kw, @RequestParam(value="cid", defaultValue = "0") Integer cid) {
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="kw", defaultValue = "") String kw, @RequestParam(value="cid", defaultValue = "1") Integer cid) {
         Page<Article> paging = this.articleService.getList(page, kw, cid);
+        model.addAttribute("selectedCategory", this.categoryService.getCategory(cid));
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         return "article_list";
@@ -53,13 +54,12 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String create(@Valid ArticleForm articleForm, BindingResult bindingResult, Principal principal) {
+    public String create(@Valid ArticleForm articleForm, @RequestParam(value = "cid", defaultValue = "0") Integer cid, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "article_form";
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        Category category = this.categoryService.getCategory(articleForm.getCategory().getId());
-        this.articleService.createArticle(articleForm.getTitle(), articleForm.getContent(), siteUser, category                                                                                              );
+        this.articleService.createArticle(articleForm.getTitle(), articleForm.getContent(), siteUser, this.categoryService.getCategory(cid));
         return "redirect:/article/list";
     }
 

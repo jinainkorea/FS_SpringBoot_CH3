@@ -28,7 +28,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
         + "     or u1.username like %:kw% "
         + "     or c.content like %:kw% "
         + "     or u2.username like %:kw%) "
-        + "     and (:cid = 0 or ca.id = :cid)"
+        + "     and (:cid = 1 or ca.id = :cid)"
     )
     Page<Article> findAllByKeyword(@Param("kw") String kw, Pageable pageable, @Param("cid") Integer cid);
 }
