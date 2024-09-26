@@ -75,11 +75,15 @@ public class CommentController {
 
     @PreAuthorize("isAuthenticated")
     @GetMapping("/vote/{id}")
-    public String commentVote(Principal principal, @PathVariable("id") Integer id) {
+    @ResponseBody
+    public Integer commentVote(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.commentService.vote(comment, siteUser);
-        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
+
+        Comment votedComment = this.commentService.getComment(id);
+        Integer votedNum = votedComment.getVoter().size();
+        return votedNum;
     }
 
 }

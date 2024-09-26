@@ -93,10 +93,21 @@
   Array.from(recommend_elements).forEach(function(element) {
       element.addEventListener('click', function() {
           if(confirm("정말로 추천하시겠습니까?")) {
-              location.href = this.dataset.uri;
+            const recommend = $(this).find("span");
+            $.get(this.dataset.uri, function(result) {
+              recommend.text(result);
+            })
+              .done(function(data) {
+              console.log("요청 성공:", data);
+            })
+              .fail(function(jqXHR, textStatus, errorThrown) {
+              console.error("요청 실패:", textStatus, errorThrown);
+            });
           };
       });
   });
+
+
 </script>
 </html>
 
