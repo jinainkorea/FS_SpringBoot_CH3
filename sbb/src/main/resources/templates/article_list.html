@@ -20,6 +20,7 @@
         <th style="width:50%">제목</th>
         <th>글쓴이</th>
         <th>작성일시</th>
+        <th>조회수</th>
       </tr>
       </thead>
       <tbody>
@@ -34,6 +35,7 @@
           </td>
           <td><span th:if="${article.author != null}" th:text="${article.author.username}"></span></td>
           <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}">작성날짜</td>
+          <td><span th:text="${article.view} != null ? ${article.view}:0"></span></td>
         </tr>
       </tbody>
     </table>

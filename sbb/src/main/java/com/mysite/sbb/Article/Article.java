@@ -29,6 +29,8 @@ public class Article {
 
     private LocalDateTime modifyDate;
 
+    private Long view;
+
     @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 

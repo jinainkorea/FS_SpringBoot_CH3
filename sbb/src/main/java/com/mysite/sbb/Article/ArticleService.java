@@ -62,6 +62,7 @@ public class ArticleService {
         article.setCreateDate(LocalDateTime.now());
         article.setAuthor(user);
         article.setCategory(category);
+        article.setView(0L);
         this.articleRepository.save(article);
     }
 
@@ -87,6 +88,15 @@ public class ArticleService {
 
     public void vote(Article article, SiteUser siteUser) {
         article.getVoter().add(siteUser);
+        this.articleRepository.save(article);
+    }
+
+    public void view_up(Article article) {
+        Long view = article.getView();
+        if (view == null) {
+            view = 0L;
+        }
+        article.setView(view + 1);
         this.articleRepository.save(article);
     }
 }

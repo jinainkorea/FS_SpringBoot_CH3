@@ -3,10 +3,6 @@ package com.mysite.sbb.Article;
 import com.mysite.sbb.Article.ArticleForm;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-
-import com.mysite.sbb.Category.Category;
 import com.mysite.sbb.Category.CategoryService;
 import com.mysite.sbb.Comment.CommentForm;
 import com.mysite.sbb.User.SiteUser;
@@ -43,6 +39,7 @@ public class ArticleController {
     public String detail(Model model, @PathVariable Integer id, CommentForm commentForm) {
         Article article = this.articleService.getArticleById(id);
         model.addAttribute("article", article);
+        this.articleService.view_up(article);
         return "article_detail";
     }
 
